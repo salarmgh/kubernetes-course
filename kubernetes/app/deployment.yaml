@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    environment: production
+    app: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      environment: production
+      app: app
+  template:
+    metadata:
+      labels:
+        environment: production
+        app: app
+    spec:
+      containers:
+        - name: nginx
+          image: salarmgh/app:webserver-v2
+        - name: fpm
+          image: salarmgh/app:fpm-v1

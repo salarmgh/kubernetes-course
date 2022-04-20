@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+    environment: production
+  name: nginx
+spec:
+  ports:
+    - port: 80 # Front port
+      protocol: TCP
+      targetPort: 80 # Backend port
+  selector:
+    environment: production
+    app: nginx
+  type: ClusterIP

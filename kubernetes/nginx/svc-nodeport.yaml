@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+    environment: production
+  name: nginx
+spec:
+  ports:
+    - port: 80 # Front port
+      protocol: TCP
+      targetPort: 80 # Backend port
+      nodePort: 30537 # docker run -p 30537:80 nginx
+  selector:
+    environment: production
+    app: nginx
+  type: NodePort

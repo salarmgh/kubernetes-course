@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: app
+    environment: production
+  name: app
+spec:
+  ports:
+    - port: 80 # Front port
+      protocol: TCP
+      targetPort: 80 # Backend port
+  selector:
+    environment: production
+    app: app
+  type: ClusterIP
