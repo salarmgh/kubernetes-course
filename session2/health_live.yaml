@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.21.6
+      livenessProbe:
+        exec:
+          command:
+            - whoami
+        initialDelaySeconds: 5
+        periodSeconds: 5
