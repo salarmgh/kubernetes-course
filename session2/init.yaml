@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.21.6
+  initContainers:
+    - name: init-1
+      image: dockerhub.ir/busybox:1.28
+      command:
+        - sleep
+        - "10"
+    - name: init-2
+      image: dockerhub.ir/busybox:1.28
+      command: ["echo", "hello from second init container"]
