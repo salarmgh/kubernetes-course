@@ -9,8 +9,8 @@ spec:
     - name: nginx
       image: nginx:1.21.6
       livenessProbe:
-        exec:
-          command:
-            - whoamie
+        httpGet:
+          path: /foo
+          port: 80
         initialDelaySeconds: 5
         periodSeconds: 5
