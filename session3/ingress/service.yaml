@@ -1,0 +1,15 @@
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx
+  name: app
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx
+  type: ClusterIP

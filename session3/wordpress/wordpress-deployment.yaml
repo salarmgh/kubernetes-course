@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - name: wordpress
+        image: salarmgh/wordpress:v1
+        ports:
+        - containerPort: 9000
+      - name: nginx
+        image: salarmgh/webserverwp:v1
+        ports:
+        - containerPort: 80

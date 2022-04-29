@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: percona
+  labels:
+    app: percona
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: percona
+  template:
+    metadata:
+      labels:
+        app: percona
+    spec:
+      containers:
+        - name: percona
+          image: dockerhub.ir/percona:8.0.27-18
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: wordpress_db
+            - name: MYSQL_USER
+              value: wordpress_user
+            - name: MYSQL_PASSWORD
+              value: wordpress_pass
+            - name: MYSQL_ROOT_PASSWORD
+              value: root

@@ -1,0 +1,20 @@
+version: "3"
+services:
+  percona:
+    image: dockerhub.ir/percona:8.0.27-18
+    environment:
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wordpress_user
+      MYSQL_PASSWORD: wordpress_pass
+      MYSQL_ROOT_PASSWORD: root
+  wordpress:
+    build:
+      context: .
+      target: wordpress
+
+  webserver:
+    build:
+      context: .
+      target: webserver
+    ports:
+      - 80:80
