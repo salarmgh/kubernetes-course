@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hidden-config
+data:
+  .conf.yaml: |
+    master: "true"
+    server-id: 2    

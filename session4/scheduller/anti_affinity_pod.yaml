@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: team4
+  labels:
+     team: "4"
+spec:
+  containers:
+  - name: nginx
+    image: dockerhub.ir/nginx:1.21.6

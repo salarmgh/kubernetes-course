@@ -1,0 +1,22 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority-nonpreempting
+value: 1000000
+preemptionPolicy: Never
+globalDefault: false
+description: "This priority class will not cause other pods to be preempted."
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: dockerhub.ir/nginx:1.21.6
+    imagePullPolicy: IfNotPresent
+  priorityClassName: high-priority-nonpreempting

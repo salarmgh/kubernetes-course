@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-hidden
+spec:
+  containers:
+  - name: nginx
+    image: dockerhub.ir/nginx:1.21.6
+    volumeMounts:
+    - name: foo
+      mountPath: "/etc/foo"
+      readOnly: true
+  volumes:
+  - name: foo
+    configMap:
+      name: hidden-config
+      optional: true

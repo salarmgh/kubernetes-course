@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  serviceName: "mysql"
+  replicas: 2
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mysql
+          image: dockerhub.ir/percona:8.0.27-18
+          ports:
+            - containerPort: 3306
+              name: mysql
+          env:
+            - name: MYSQL_DATABASE
+              value: wordpress_db
+            - name: MYSQL_USER
+              value: wordpress_user
+            - name: MYSQL_PASSWORD
+              value: wordpress_pass
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+          volumeMounts:
+            - name: server-id
+              mountPath: /etc/my.cnf.d/
+          lifecycle:
+            postStart:
+              exec:
+                command: ["mysql", "--help"]
+      initContainers:
+        - name: setup-cluster
+          image: dockerhub.ir/busybox:1.28
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              "echo $HOSTNAME | cut -d'-' -f2 > /etc/my.cnf.d/server_id.cnf && echo 'log_bin = /var/log/mysql/mysql-bin.log' >> /etc/my.cnf.d/server_id.cnf",
+            ]
+          volumeMounts:
+            - name: server-id
+              mountPath: /etc/my.cnf.d/
+      volumes:
+        - name: server-id
+          emptyDir: {}

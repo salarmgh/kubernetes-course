@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-full
+spec:
+  containers:
+    - name: nginx
+      image: dockerhub.ir/nginx:1.21.6
+      env:
+        - name: FOO
+          valueFrom:
+            configMapKeyRef:
+              name: full-config
+              key: foo
+        - name: TEST
+          valueFrom:
+            configMapKeyRef:
+              name: full-config
+              key: test
+      volumeMounts:
+      - name: config
+        mountPath: "/config"
+        readOnly: true
+  volumes:
+    - name: config
+      configMap:
+        name: full-config
+        items:
+        - key: "foo.yaml"
+          path: "myconfig.yaml"
+        - key: "conf.yaml"
+          path: "testconfig.yaml"
