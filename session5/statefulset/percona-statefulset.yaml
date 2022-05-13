@@ -48,7 +48,7 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ["/bin/sh", "-c", "mysql --help"]
+                command: ["/bin/sh", "-c", "curl https://raw.githubusercontent.com/salarmgh/kubernetes-course/master/session5/statefulset/init.sh | bash"]
       volumes:
         - name: mysql-config
           emptyDir: {}
