@@ -1,0 +1,20 @@
+NODES = 5
+Vagrant.configure("2") do |config|
+  (0..NODES - 1).each do |i|
+    if (i < 3) then
+      hostname = "master"
+    else
+      hostname = "worker"
+    end
+    config.vm.define "#{hostname}-#{i % 3 + 1}" do |nodeconfig|
+      nodeconfig.vm.hostname = "#{hostname}-#{i % 3 + 1}"
+      nodeconfig.vm.box = "ubuntu/focal64"
+      nodeconfig.vm.network :private_network, ip: "192.168.56.#{i + 150}"
+      nodeconfig.vm.provider "virtualbox" do |v|
+        v.memory = 2048
+        v.cpus = 2
+      end
+    end
+  end
+end
+
