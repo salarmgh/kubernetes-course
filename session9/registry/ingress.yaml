@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "1000m"
+  name: registry
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: registry.anisa.lab
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: registry
+                port:
+                  number: 80
